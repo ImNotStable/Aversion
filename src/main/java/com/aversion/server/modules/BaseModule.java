@@ -1,17 +1,14 @@
 package com.aversion.server.modules;
 
+import com.aversion.server.AversionServer;
+import com.aversion.server.tools.Tool;
+import com.aversion.server.utils.ReflectionUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
-import com.aversion.server.AversionServer;
-import com.aversion.server.tools.Tool;
-import com.aversion.server.utils.InputSchema;
-import com.aversion.server.utils.Logger;
-import com.aversion.server.utils.ReflectionUtil;
-
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,23 +32,22 @@ public abstract class BaseModule {
   private static final ObjectMapper objectMapper = new ObjectMapper();
 
   private final String id;
-
-  public String getId() {
-    return id;
-  }
   private final Map<String, Tool> tools = new ConcurrentHashMap<>();
   private AversionServer server;
-
   private boolean initialized = false;
-
-  public boolean isInitialized() {
-    return initialized;
-  }
 
   protected BaseModule() {
     String id = getClass().getSimpleName().toLowerCase();
     int cutoff = id.length() - 6; // Length of "Module"
     this.id = id.substring(0, cutoff);
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public boolean isInitialized() {
+    return initialized;
   }
 
   /**
@@ -129,11 +125,11 @@ public abstract class BaseModule {
 
   /**
    * Helper method to register a tool with the Aversion server.
+   * 
+   * <p>This method wraps the tool handler with error handling and monitoring,
+   * validates the module is initialized, and registers the tool with the server.
    *
-   * @param name        Unique name for the tool
-   * @param description Human-readable description of the tool's functionality
-   * @param inputSchema JSON schema defining expected input parameters
-   * @param handler     Function to execute when the tool is called
+   * @param tool The tool to register, containing name, description, input schema, and handler
    */
   protected void registerTool(Tool tool) {
     validateInitialized();
@@ -188,7 +184,6 @@ public abstract class BaseModule {
     };
   }
 
-  
 
   /**
    * Helper method to create a standardized text response.
@@ -259,9 +254,6 @@ public abstract class BaseModule {
     tools.clear();
   }
 
-  
-
-  
 
   /**
    * Module configuration record.

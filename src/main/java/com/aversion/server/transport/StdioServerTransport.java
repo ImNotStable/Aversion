@@ -1,7 +1,5 @@
 package com.aversion.server.transport;
 
-import com.aversion.server.utils.Logger;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

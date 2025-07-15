@@ -1,7 +1,7 @@
 package com.aversion.server.modules;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.aversion.server.utils.JsonUtil;
+import com.fasterxml.jackson.databind.JsonNode;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -56,7 +56,6 @@ public class WebModule extends BaseModule {
     );
   }
 
-  
 
   // Tool handlers
 
@@ -66,12 +65,12 @@ public class WebModule extends BaseModule {
    * @param args JsonNode containing the tool arguments:
    *             - "url" (String): The URL to fetch.
    *             - "options" (Object, optional): An object containing fetch options:
-   *               - "timeout" (Integer, optional): Connection and read timeout in milliseconds. Default is 10000.
-   *               - "userAgent" (String, optional): User-Agent header to send. Default is a common browser user agent.
-   *               - "followRedirects" (Boolean, optional): Whether to follow HTTP redirects. Default is true.
-   *               - "includeHeaders" (Boolean, optional): Whether to include response headers in the output. Default is false.
-   *               - "textOnly" (Boolean, optional): Whether to strip HTML tags and return only text content. Default is true.
-   *               - "maxLength" (Integer, optional): Maximum length of the content to return. Default is 50000.
+   *             - "timeout" (Integer, optional): Connection and read timeout in milliseconds. Default is 10000.
+   *             - "userAgent" (String, optional): User-Agent header to send. Default is a common browser user agent.
+   *             - "followRedirects" (Boolean, optional): Whether to follow HTTP redirects. Default is true.
+   *             - "includeHeaders" (Boolean, optional): Whether to include response headers in the output. Default is false.
+   *             - "textOnly" (Boolean, optional): Whether to strip HTML tags and return only text content. Default is true.
+   *             - "maxLength" (Integer, optional): Maximum length of the content to return. Default is 50000.
    * @return A Map containing the fetched web content as a text response.
    * @throws Exception if the URL cannot be fetched or processed.
    */

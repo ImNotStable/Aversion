@@ -32,11 +32,7 @@ public final class DatabaseModule extends BaseModule {
     return new ModuleConfig(MODULE_NAME, MODULE_VERSION, MODULE_DESCRIPTION);
   }
 
-  
-
-  
-
-    /**
+  /**
    * Returns the {@link DatabaseConnectionManager} instance used by this module.
    *
    * @return The DatabaseConnectionManager instance.

@@ -27,7 +27,9 @@
       "params": {
         "type": "array",
         "description": "Parameters for the WHERE clause",
-        "items": {"type": "string"}
+        "items": {
+          "type": "string"
+        }
       }
     },
     "required": [

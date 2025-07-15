@@ -5,13 +5,10 @@ import java.util.Map;
 
 /**
  * Represents the result of a database query execution.
- */
-/**
- * Represents the result of a database query execution.
  *
- * @param rowCount The number of rows returned by a SELECT query, or 0 for UPDATE/INSERT/DELETE.
- * @param columns A list of column names for SELECT queries. Empty for UPDATE/INSERT/DELETE.
- * @param rows A list of maps, where each map represents a row and contains column-value pairs for SELECT queries. Empty for UPDATE/INSERT/DELETE.
+ * @param rowCount     The number of rows returned by a SELECT query, or 0 for UPDATE/INSERT/DELETE.
+ * @param columns      A list of column names for SELECT queries. Empty for UPDATE/INSERT/DELETE.
+ * @param rows         A list of maps, where each map represents a row and contains column-value pairs for SELECT queries. Empty for UPDATE/INSERT/DELETE.
  * @param affectedRows The number of rows affected by an UPDATE/INSERT/DELETE query, or 0 for SELECT.
  */
 public record QueryResult(

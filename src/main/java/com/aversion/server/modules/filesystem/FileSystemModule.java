@@ -3,7 +3,6 @@ package com.aversion.server.modules.filesystem;
 import com.aversion.server.modules.BaseModule;
 import com.aversion.server.utils.JsonUtil;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.nio.file.*;

@@ -1,34 +1,39 @@
 {
-  "required" : [ "connectionId", "queries" ],
-  "$schema" : "http://json-schema.org/draft-07/schema#",
-  "properties" : {
-    "queries" : {
-      "type" : "array",
-      "description" : "Array of queries to execute in transaction",
-      "items" : {
-        "type" : "object",
-        "properties" : {
-          "params" : {
-            "type" : "array",
-            "items" : {
-              "type" : "string"
+  "required": [
+    "connectionId",
+    "queries"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "queries": {
+      "type": "array",
+      "description": "Array of queries to execute in transaction",
+      "items": {
+        "type": "object",
+        "properties": {
+          "params": {
+            "type": "array",
+            "items": {
+              "type": "string"
             },
-            "description" : "Query parameters"
+            "description": "Query parameters"
           },
-          "query" : {
-            "type" : "string",
-            "description" : "SQL query"
+          "query": {
+            "type": "string",
+            "description": "SQL query"
           }
         },
-        "required" : [ "query" ]
+        "required": [
+          "query"
+        ]
       },
-      "maxItems" : 100,
-      "minItems" : 1
+      "maxItems": 100,
+      "minItems": 1
     },
-    "connectionId" : {
-      "type" : "string",
-      "description" : "Database connection identifier"
+    "connectionId": {
+      "type": "string",
+      "description": "Database connection identifier"
     }
   },
-  "type" : "object"
+  "type": "object"
 }

@@ -1,49 +1,58 @@
 {
-  "required" : [ "connectionId", "config" ],
-  "$schema" : "http://json-schema.org/draft-07/schema#",
-  "properties" : {
-    "config" : {
-      "required" : [ "type" ],
-      "description" : "Database configuration",
-      "properties" : {
-        "port" : {
-          "type" : "integer",
-          "description" : "Database port"
+  "required": [
+    "connectionId",
+    "config"
+  ],
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "config": {
+      "required": [
+        "type"
+      ],
+      "description": "Database configuration",
+      "properties": {
+        "port": {
+          "type": "integer",
+          "description": "Database port"
         },
-        "password" : {
-          "type" : "string",
-          "description" : "Database password"
+        "password": {
+          "type": "string",
+          "description": "Database password"
         },
-        "username" : {
-          "type" : "string",
-          "description" : "Database username"
+        "username": {
+          "type": "string",
+          "description": "Database username"
         },
-        "host" : {
-          "type" : "string",
-          "default" : "localhost",
-          "description" : "Database host"
+        "host": {
+          "type": "string",
+          "default": "localhost",
+          "description": "Database host"
         },
-        "type" : {
-          "type" : "string",
-          "enum" : [ "sqlite", "mysql", "postgresql" ],
-          "description" : "Database type"
+        "type": {
+          "type": "string",
+          "enum": [
+            "sqlite",
+            "mysql",
+            "postgresql"
+          ],
+          "description": "Database type"
         },
-        "file" : {
-          "type" : "string",
-          "description" : "SQLite database file path"
+        "file": {
+          "type": "string",
+          "description": "SQLite database file path"
         },
-        "database" : {
-          "type" : "string",
-          "description" : "Database name"
+        "database": {
+          "type": "string",
+          "description": "Database name"
         }
       },
-      "type" : "object"
+      "type": "object"
     },
-    "connectionId" : {
-      "type" : "string",
-      "pattern" : "^[a-zA-Z0-9_-]+$",
-      "description" : "Unique identifier for this database connection"
+    "connectionId": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9_-]+$",
+      "description": "Unique identifier for this database connection"
     }
   },
-  "type" : "object"
+  "type": "object"
 }

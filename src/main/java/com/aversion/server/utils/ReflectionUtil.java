@@ -3,7 +3,6 @@ package com.aversion.server.utils;
 import com.aversion.server.modules.BaseModule;
 import com.aversion.server.tools.Tool;
 import com.aversion.server.tools.ToolDefinition;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -67,7 +66,7 @@ public class ReflectionUtil {
   /**
    * Loads a {@link Class} object by its package and class name. Caches the loaded classes for performance.
    *
-   * @param pkg The package name.
+   * @param pkg   The package name.
    * @param clazz The class file name (e.g., "MyClass.class").
    * @return The loaded {@link Class} object.
    * @throws RuntimeException if the class cannot be found or loaded.
@@ -102,7 +101,7 @@ public class ReflectionUtil {
    * Retrieves a stream of methods annotated with a specific annotation from a target class.
    *
    * @param annotationClass The annotation class to search for (e.g., {@link ToolDefinition}).
-   * @param targetClass The class to scan for annotated methods.
+   * @param targetClass     The class to scan for annotated methods.
    * @return A stream of annotated {@link Method} objects.
    */
   private static Stream<Method> getAnnotatedMethods(Class<? extends Annotation> annotationClass, Class<?> targetClass) {
@@ -128,8 +127,8 @@ public class ReflectionUtil {
    * Retrieves a stream of annotations of a specific type from methods within a target class.
    *
    * @param annotationClass The annotation class to retrieve.
-   * @param targetClass The class to scan for annotated methods.
-   * @param <T> The type of the annotation.
+   * @param targetClass     The class to scan for annotated methods.
+   * @param <T>             The type of the annotation.
    * @return A stream of annotations.
    */
   private static <T extends Annotation> Stream<T> getAnnotationsOfMethods(Class<T> annotationClass, Class<?> targetClass) {

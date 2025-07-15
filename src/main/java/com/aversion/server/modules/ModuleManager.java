@@ -1,7 +1,6 @@
 package com.aversion.server.modules;
 
 import com.aversion.server.AversionServer;
-import com.aversion.server.utils.Logger;
 import com.aversion.server.utils.ReflectionUtil;
 
 import java.util.Arrays;

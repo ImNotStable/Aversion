@@ -18,7 +18,7 @@ public class ValidationUtils {
   /**
    * Extracts a required string field from a JsonNode.
    *
-   * @param node The JsonNode to extract from.
+   * @param node      The JsonNode to extract from.
    * @param fieldName The name of the field to extract.
    * @return The string value of the field.
    * @throws IllegalArgumentException if field is missing or not a string.

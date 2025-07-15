@@ -1,12 +1,10 @@
 package com.aversion.server;
 
+import com.aversion.server.tools.Tool;
+import com.aversion.server.transport.ServerTransport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.aversion.server.tools.Tool;
-import com.aversion.server.transport.ServerTransport;
-import com.aversion.server.utils.Logger;
-
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -23,27 +21,27 @@ public class AversionServer {
   private static final ObjectMapper objectMapper = new ObjectMapper();
 
   private final String name;
-
-  public String getName() {
-    return name;
-  }
   private final String version;
-
-  public String getVersion() {
-    return version;
-  }
   private final Map<String, Tool> tools = new ConcurrentHashMap<>();
   private ServerTransport transport;
 
   /**
    * Constructs a new {@code AversionServer} instance with the specified name and version.
    *
-   * @param name The name of the server.
+   * @param name    The name of the server.
    * @param version The version of the server.
    */
   public AversionServer(String name, String version) {
     this.name = name;
     this.version = version;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getVersion() {
+    return version;
   }
 
   /**

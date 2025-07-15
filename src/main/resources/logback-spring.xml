@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- Define property sources -->
-    <property name="LOG_LEVEL" value="${LOG_LEVEL:-INFO}" />
-    <property name="LOG_FILE" value="${LOG_FILE:-logs/mcp-server.log}" />
-    <property name="LOG_MAX_SIZE" value="${LOG_MAX_SIZE:-10MB}" />
-    <property name="LOG_MAX_HISTORY" value="${LOG_MAX_HISTORY:-30}" />
-    <property name="ENV" value="${ENV:-production}" />
+    <property name="LOG_LEVEL" value="${LOG_LEVEL:-INFO}"/>
+    <property name="LOG_FILE" value="${LOG_FILE:-logs/mcp-server.log}"/>
+    <property name="LOG_MAX_SIZE" value="${LOG_MAX_SIZE:-10MB}"/>
+    <property name="LOG_MAX_HISTORY" value="${LOG_MAX_HISTORY:-30}"/>
+    <property name="ENV" value="${ENV:-production}"/>
 
     <!-- Console appender for development -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -48,11 +48,11 @@
                 <pattern>
                     <pattern>
                         {
-                            "service": "mcp-server",
-                            "version": "1.0.0",
-                            "environment": "${ENV}",
-                            "host": "${HOSTNAME:-unknown}",
-                            "pid": "#asLong{#property{PID}}"
+                        "service": "mcp-server",
+                        "version": "1.0.0",
+                        "environment": "${ENV}",
+                        "host": "${HOSTNAME:-unknown}",
+                        "pid": "#asLong{#property{PID}}"
                         }
                     </pattern>
                 </pattern>
@@ -96,9 +96,9 @@
                 <pattern>
                     <pattern>
                         {
-                            "audit": true,
-                            "service": "mcp-server",
-                            "environment": "${ENV}"
+                        "audit": true,
+                        "service": "mcp-server",
+                        "environment": "${ENV}"
                         }
                     </pattern>
                 </pattern>
@@ -122,8 +122,8 @@
                 <pattern>
                     <pattern>
                         {
-                            "performance": true,
-                            "service": "mcp-server"
+                        "performance": true,
+                        "service": "mcp-server"
                         }
                     </pattern>
                 </pattern>

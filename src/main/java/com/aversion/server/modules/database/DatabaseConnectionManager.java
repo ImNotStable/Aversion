@@ -1,6 +1,5 @@
 package com.aversion.server.modules.database;
 
-import com.aversion.server.utils.Logger;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -59,8 +58,8 @@ public class DatabaseConnectionManager {
    * Inserts data into a specified table.
    *
    * @param connectionId Unique identifier for the database connection.
-   * @param tableName The name of the table to insert data into.
-   * @param data A map where keys are column names and values are the data to be inserted.
+   * @param tableName    The name of the table to insert data into.
+   * @param data         A map where keys are column names and values are the data to be inserted.
    * @return The number of rows affected by the insert operation.
    * @throws Exception if the insertion fails.
    */
@@ -110,14 +109,14 @@ public class DatabaseConnectionManager {
    * Updates data in a specified table based on a WHERE clause.
    *
    * @param connectionId Unique identifier for the database connection.
-   * @param tableName The name of the table to update.
-   * @param data A map where keys are column names and values are the new data.
-   * @param whereClause The SQL WHERE clause to filter rows (e.g., "id = ?"). Can be empty.
-   * @param params A list of parameters for the WHERE clause.
+   * @param tableName    The name of the table to update.
+   * @param data         A map where keys are column names and values are the new data.
+   * @param whereClause  The SQL WHERE clause to filter rows (e.g., "id = ?"). Can be empty.
+   * @param params       A list of parameters for the WHERE clause.
    * @return The number of rows affected by the update operation.
    * @throws Exception if the update fails.
    */
-    public int updateData(String connectionId, String tableName, Map<String, Object> data, String whereClause, List<Object> params) throws Exception {
+  public int updateData(String connectionId, String tableName, Map<String, Object> data, String whereClause, List<Object> params) throws Exception {
     long startTime = System.currentTimeMillis();
     totalQueries.incrementAndGet();
 
@@ -163,13 +162,13 @@ public class DatabaseConnectionManager {
    * Deletes data from a specified table based on a WHERE clause.
    *
    * @param connectionId Unique identifier for the database connection.
-   * @param tableName The name of the table to delete from.
-   * @param whereClause The SQL WHERE clause to filter rows (e.g., "id = ?"). Can be empty.
-   * @param params A list of parameters for the WHERE clause.
+   * @param tableName    The name of the table to delete from.
+   * @param whereClause  The SQL WHERE clause to filter rows (e.g., "id = ?"). Can be empty.
+   * @param params       A list of parameters for the WHERE clause.
    * @return The number of rows affected by the delete operation.
    * @throws Exception if the deletion fails.
    */
-    public int deleteData(String connectionId, String tableName, String whereClause, List<Object> params) throws Exception {
+  public int deleteData(String connectionId, String tableName, String whereClause, List<Object> params) throws Exception {
     long startTime = System.currentTimeMillis();
     totalQueries.incrementAndGet();
 
@@ -194,8 +193,8 @@ public class DatabaseConnectionManager {
    * Creates a new table in the database.
    *
    * @param connectionId Unique identifier for the database connection.
-   * @param tableName The name of the table to create.
-   * @param columns A list of maps, where each map defines a column (e.g., name, type, primaryKey, notNull, defaultValue).
+   * @param tableName    The name of the table to create.
+   * @param columns      A list of maps, where each map defines a column (e.g., name, type, primaryKey, notNull, defaultValue).
    * @throws Exception if the table creation fails.
    */
   public void createTable(String connectionId, String tableName, List<Map<String, Object>> columns) throws Exception {

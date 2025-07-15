@@ -16,7 +16,10 @@
       "action": {
         "type": "string",
         "description": "Action to perform: 'add_column' or 'drop_column'",
-        "enum": ["add_column", "drop_column"]
+        "enum": [
+          "add_column",
+          "drop_column"
+        ]
       },
       "columnDefinition": {
         "type": "object",
@@ -63,17 +66,25 @@
     "oneOf": [
       {
         "properties": {
-          "action": {"const": "add_column"},
+          "action": {
+            "const": "add_column"
+          },
           "columnDefinition": {}
         },
-        "required": ["columnDefinition"]
+        "required": [
+          "columnDefinition"
+        ]
       },
       {
         "properties": {
-          "action": {"const": "drop_column"},
+          "action": {
+            "const": "drop_column"
+          },
           "columnName": {}
         },
-        "required": ["columnName"]
+        "required": [
+          "columnName"
+        ]
       }
     ]
   }

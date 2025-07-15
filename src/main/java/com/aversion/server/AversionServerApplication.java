@@ -4,7 +4,6 @@ import com.aversion.server.modules.ModuleManager;
 import com.aversion.server.transport.StdioServerTransport;
 import com.aversion.server.utils.ProductionUtils;
 
-
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -25,14 +24,6 @@ public final class AversionServerApplication {
   public AversionServerApplication() {
     this.server = new AversionServer(SERVER_NAME, SERVER_VERSION);
     this.moduleManager = new ModuleManager(server);
-  }
-
-  public AversionServer getServer() {
-    return server;
-  }
-
-  public ModuleManager getModuleManager() {
-    return moduleManager;
   }
 
   /**
@@ -59,6 +50,14 @@ public final class AversionServerApplication {
    */
   private static void validateEnvironment() {
     ProductionUtils.validateEnvironment();
+  }
+
+  public AversionServer getServer() {
+    return server;
+  }
+
+  public ModuleManager getModuleManager() {
+    return moduleManager;
   }
 
   /**
