@@ -2,12 +2,12 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ master, dev ]
   pull_request:
-    branches: [ main ]
+    branches: [ master, dev ]
 
 env:
-  JAVA_VERSION: '17'
+  JAVA_VERSION: '21'
   DOCKER_REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
@@ -17,7 +17,7 @@ jobs:
     
     strategy:
       matrix:
-        java-version: [17, 21]
+        java-version: [21]
     
     steps:
     - uses: actions/checkout@v4
@@ -47,7 +47,7 @@ jobs:
   sonarqube_analysis:
     runs-on: self-hosted
     needs: test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' # Only run on push to main
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' # Only run on push to master
     
     steps:
     - uses: actions/checkout@v4
@@ -156,7 +156,7 @@ jobs:
   deploy:
     runs-on: self-hosted
     needs: [build, docker]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/master'
     environment: production
     
     steps:
