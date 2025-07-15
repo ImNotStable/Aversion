@@ -1,8 +1,9 @@
-.gradle/
+/.gradle/
 /build/
-.idea/
-.vscode/
+/.idea/
+/.vscode/
+/bin/
 
-.env
-.env.development
-.env.production
+/.env
+/.env.development
+/.env.production
