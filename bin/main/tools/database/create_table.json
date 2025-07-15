@@ -1,0 +1,59 @@
+{
+  "name": "create_table",
+  "description": "Create a new table in the database",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "connectionId": {
+        "type": "string",
+        "description": "Database connection identifier"
+      },
+      "tableName": {
+        "type": "string",
+        "description": "Name of the table to create",
+        "minLength": 1
+      },
+      "columns": {
+        "type": "array",
+        "description": "Array of column definitions",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Column name"
+            },
+            "type": {
+              "type": "string",
+              "description": "Column SQL type (e.g., VARCHAR(255), INT, TEXT)"
+            },
+            "primaryKey": {
+              "type": "boolean",
+              "description": "True if this column is part of the primary key",
+              "default": false
+            },
+            "notNull": {
+              "type": "boolean",
+              "description": "True if this column cannot be null",
+              "default": false
+            },
+            "defaultValue": {
+              "type": "string",
+              "description": "Default value for the column"
+            }
+          },
+          "required": [
+            "name",
+            "type"
+          ]
+        }
+      }
+    },
+    "required": [
+      "connectionId",
+      "tableName",
+      "columns"
+    ]
+  }
+}

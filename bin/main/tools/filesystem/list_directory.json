@@ -1,0 +1,17 @@
+{
+  "name": "list_directory",
+  "description": "Lists the contents of a directory.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "The path to the directory.",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "path"
+    ]
+  }
+}
