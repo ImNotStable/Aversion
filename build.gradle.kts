@@ -1,3 +1,8 @@
+import org.gradle.api.provider.ListProperty
+import org.gradle.api.provider.MapProperty
+import org.gradle.api.tasks.Input
+import javax.inject.Inject
+
 plugins {
     application
     java
@@ -6,10 +11,33 @@ plugins {
     id("jacoco")
     id("org.sonarqube") version "6.2.0.5505"
     id("com.google.cloud.tools.jib") version "3.4.5"
+    id("org.owasp.dependencycheck") version "9.0.9"
 }
 
 group = "com.aversion"
 version = "1.0.0"
+
+// Reusable custom task for executing command line instructions
+abstract class ExecTask @Inject constructor(
+    private val execOperations: ExecOperations
+) : DefaultTask() {
+
+    @get:Input
+    abstract val command: ListProperty<String>
+
+    @get:Input
+    abstract val environmentVars: MapProperty<String, Any>
+
+    @TaskAction
+    fun runCommand() {
+        execOperations.exec {
+            commandLine(command.get())
+            if (environmentVars.isPresent) {
+                environment(environmentVars.get())
+            }
+        }
+    }
+}
 
 repositories {
     mavenCentral()
@@ -25,7 +53,7 @@ dependencies {
     // Core MCP dependencies
     implementation("com.fasterxml.jackson.core:jackson-core:2.19.1")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.1")
-    
+
     // Database drivers
     implementation("com.zaxxer:HikariCP:6.3.0")
     implementation("org.xerial:sqlite-jdbc:3.50.2.0")
@@ -33,29 +61,29 @@ dependencies {
     implementation("com.mysql:mysql-connector-j:9.3.0")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.5.4")
     implementation("org.postgresql:postgresql:42.7.7")
-    
+
     // HTTP client for web module
     implementation("com.squareup.okhttp3:okhttp:5.1.0")
-    
+
     // JSON validation
     implementation("com.networknt:json-schema-validator:1.5.8")
-    
+
     // Logging
     implementation("org.slf4j:slf4j-api:2.0.17")
     implementation("ch.qos.logback:logback-classic:1.5.18")
     implementation("net.logstash.logback:logstash-logback-encoder:8.1")
-    
+
     // Configuration
     implementation("org.yaml:snakeyaml:2.4")
-    
+
     // Utilities
     implementation("org.apache.commons:commons-lang3:3.18.0")
     implementation("commons-io:commons-io:2.19.0")
     implementation("org.jetbrains:annotations:24.1.0")
-    
+
     // HTML parsing for web module
     implementation("org.jsoup:jsoup:1.21.1")
-    
+
     // Testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
     testImplementation("org.junit.platform:junit-platform-launcher:1.11.4")
@@ -78,11 +106,8 @@ tasks.test {
         events("passed", "skipped", "failed")
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
-    
-    // Enable parallel test execution
-    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
 
-    // Only run tests if 'runOnCI' property is set (e.g., by GitHub Actions)
+    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
     onlyIf { project.hasProperty("runOnCI") }
 }
 
@@ -93,7 +118,7 @@ tasks.jar {
 tasks.shadowJar {
     archiveClassifier.set("")
     archiveFileName.set("mcp-server-${version}.jar")
-    
+
     manifest {
         attributes(
             "Main-Class" to application.mainClass.get(),
@@ -101,167 +126,113 @@ tasks.shadowJar {
             "Implementation-Version" to project.version
         )
     }
-    
-    // Exclude duplicates and unwanted files
+
     exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
     mergeServiceFiles()
 }
 
 tasks.build {
-    dependsOn(tasks.shadowJar)
+    dependsOn(tasks.named("shadowJar"))
 }
 
 tasks.compileJava {
     options.compilerArgs.addAll(listOf("-parameters", "--enable-preview"))
-    
-    // Enable incremental compilation
     options.isIncremental = true
-    
-    // Enable annotation processing
     options.compilerArgs.addAll(listOf("-proc:none"))
 }
 
 tasks.compileTestJava {
     options.compilerArgs.addAll(listOf("-parameters"))
-    
-    // Enable incremental compilation
     options.isIncremental = true
-    
-    // Enable annotation processing
-    // options.compilerArgs.addAll(listOf("-proc:none")) // Removed to allow Lombok processing
 }
 
-// Custom task for running tests with coverage
 tasks.register("testWithCoverage") {
     group = "verification"
     description = "Run tests with coverage reporting"
-    dependsOn(tasks.test)
+    dependsOn(tasks.named("test"))
 }
 
-// Custom task for building and running
-tasks.register("buildAndRun") {
+tasks.register<ExecTask>("buildAndRun") {
     group = "application"
     description = "Build the application and run it"
-    dependsOn(tasks.shadowJar)
-    doLast {
-        exec {
-            commandLine("java", "-jar", "build/libs/mcp-server-${version}.jar")
-        }
-    }
+    dependsOn(tasks.named("shadowJar"))
+    command.set(listOf("java", "-jar", "build/libs/mcp-server-${project.version}.jar"))
 }
 
-// Development tasks
-tasks.register("dev") {
+tasks.register<ExecTask>("dev") {
     group = "development"
     description = "Run the application in development mode"
-    dependsOn(tasks.classes)
-    doLast {
-        exec {
-            commandLine("java", "-cp", sourceSets.main.get().runtimeClasspath.asPath, application.mainClass.get())
-            environment("ENV", "development")
-        }
-    }
+    dependsOn(tasks.named("classes"))
+    command.set(listOf("java", "-cp", sourceSets.main.get().runtimeClasspath.asPath, application.mainClass.get()))
+    environmentVars.set(mapOf("ENV" to "development"))
 }
 
-// Docker tasks
-tasks.register("dockerBuild") {
+tasks.register<ExecTask>("dockerBuild") {
     group = "docker"
     description = "Build Docker image"
-    dependsOn(tasks.shadowJar)
-    doLast {
-        exec {
-            commandLine("docker", "build", "-t", "mcp-server:${version}", ".")
-        }
-    }
+    dependsOn(tasks.named("shadowJar"))
+    command.set(listOf("docker", "build", "-t", "mcp-server:${project.version}", "."))
 }
 
-tasks.register("dockerBuildProd") {
+tasks.register<ExecTask>("dockerBuildProd") {
     group = "docker"
     description = "Build production Docker image"
-    dependsOn(tasks.shadowJar)
-    doLast {
-        exec {
-            commandLine("docker", "build", "-t", "mcp-server:latest", "-t", "mcp-server:${version}", ".")
-        }
-    }
+    dependsOn(tasks.named("shadowJar"))
+    command.set(listOf("docker", "build", "-t", "mcp-server:latest", "-t", "mcp-server:${project.version}", "."))
 }
 
-tasks.register("dockerRun") {
+tasks.register<ExecTask>("dockerRun") {
     group = "docker"
     description = "Run Docker container locally"
-    dependsOn("dockerBuild")
-    doLast {
-        exec {
-            commandLine("docker", "run", "--rm", "-p", "8080:8080", "mcp-server:${version}")
-        }
-    }
+    dependsOn(tasks.named("dockerBuild"))
+    command.set(listOf("docker", "run", "--rm", "-p", "8080:8080", "mcp-server:${project.version}"))
 }
 
-tasks.register("dockerComposeUp") {
+tasks.register<ExecTask>("dockerComposeUp") {
     group = "docker"
     description = "Start services using Docker Compose"
-    doLast {
-        exec {
-            commandLine("docker", "compose", "up", "-d")
-        }
-    }
+    command.set(listOf("docker", "compose", "up", "-d"))
 }
 
-tasks.register("dockerComposeDown") {
+tasks.register<ExecTask>("dockerComposeDown") {
     group = "docker"
     description = "Stop services using Docker Compose"
-    doLast {
-        exec {
-            commandLine("docker", "compose", "down")
-        }
-    }
+    command.set(listOf("docker", "compose", "down"))
 }
 
-tasks.register("dockerComposeProd") {
+tasks.register<ExecTask>("dockerComposeProd") {
     group = "docker"
     description = "Deploy to production using Docker Compose"
-    dependsOn("dockerBuildProd")
-    doLast {
-        exec {
-            commandLine("docker", "compose", "-f", "docker-compose.yml", "-f", "docker-compose.prod.yml", "up", "-d")
-        }
-    }
+    dependsOn(tasks.named("dockerBuildProd"))
+    command.set(listOf("docker", "compose", "-f", "docker-compose.yml", "-f", "docker-compose.prod.yml", "up", "-d"))
 }
 
-// Production tasks
 tasks.register("prodBuild") {
     group = "build"
     description = "Build for production deployment"
-    dependsOn(tasks.shadowJar, "dockerBuildProd")
+    dependsOn(tasks.named("shadowJar"), tasks.named("dockerBuildProd"))
 }
 
-tasks.register("deploy") {
+tasks.register<ExecTask>("deploy") {
     group = "deployment"
     description = "Deploy to production"
-    dependsOn("prodBuild")
-    doLast {
-        exec {
-            commandLine("docker", "compose", "-f", "docker-compose.prod.yml", "up", "-d", "--force-recreate")
-        }
-    }
+    dependsOn(tasks.named("prodBuild"))
+    command.set(listOf("docker", "compose", "-f", "docker-compose.prod.yml", "up", "-d", "--force-recreate"))
 }
 
-// JaCoCo configuration for code coverage
 jacoco {
     toolVersion = "0.8.12"
 }
 
 tasks.jacocoTestReport {
-    dependsOn(tasks.test)
+    dependsOn(tasks.named("test"))
     reports {
         xml.required.set(true)
         html.required.set(true)
         csv.required.set(false)
     }
     executionData.setFrom(fileTree(layout.buildDirectory.dir("jacoco")).include("**/*.exec"))
-    finalizedBy(tasks.jacocoTestCoverageVerification)
-
-    // Only generate report if 'runOnCI' property is set
+    finalizedBy(tasks.named("jacocoTestCoverageVerification"))
     onlyIf { project.hasProperty("runOnCI") }
 }
 
@@ -275,7 +246,6 @@ tasks.jacocoTestCoverageVerification {
     }
 }
 
-// Jib configuration for containerization
 jib {
     from {
         image = "eclipse-temurin:21-jre-alpine"
@@ -321,7 +291,6 @@ jib {
     }
 }
 
-// SonarQube configuration
 sonarqube {
     properties {
         property("sonar.projectKey", "aversion-server")
@@ -338,17 +307,15 @@ tasks.sonarqube {
     onlyIf { project.hasProperty("runOnCI") }
 }
 
-// Deployment validation task
 tasks.register("validateProduction") {
     group = "deployment"
     description = "Validate production readiness"
-    dependsOn(tasks.test, tasks.jacocoTestReport)
+    dependsOn(tasks.named("test"), tasks.named("jacocoTestReport"))
     doLast {
         println("Production validation completed successfully")
     }
 }
 
-// Performance optimization tasks
 tasks.register("cleanBuildCache") {
     group = "build"
     description = "Clean Gradle build cache"
