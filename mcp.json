@@ -1,0 +1,102 @@
+{
+  "mcpVersion": "2024-11-05",
+  "name": "aversion",
+  "version": "1.0.0",
+  "description": "A comprehensive Model Context Protocol (MCP) server with database, filesystem, and web modules",
+  "author": "Aversion Team",
+  "license": "MIT",
+  "homepage": "https://github.com/ImNotStable/Aversion",
+  "bugs": {
+    "url": "https://github.com/ImNotStable/Aversion/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ImNotStable/Aversion.git"
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": false,
+    "prompts": false,
+    "sampling": false
+  },
+  "server": {
+    "command": "java",
+    "args": [
+      "-jar",
+      "build/libs/mcp-server-1.0.0.jar"
+    ],
+    "env": {
+      "JAVA_OPTS": "-Xmx512m"
+    }
+  },
+  "modules": [
+    {
+      "name": "database",
+      "description": "Database operations including connections, queries, and transactions",
+      "tools": [
+        "connect_database",
+        "disconnect_database", 
+        "execute_query",
+        "execute_transaction",
+        "list_tables",
+        "get_table_schema"
+      ]
+    },
+    {
+      "name": "filesystem",
+      "description": "File system operations for reading, writing, and managing files",
+      "tools": [
+        "read_file",
+        "write_file",
+        "delete_file",
+        "copy_file",
+        "move_file",
+        "list_directory",
+        "create_directory",
+        "delete_directory",
+        "file_exists",
+        "file_stats"
+      ]
+    },
+    {
+      "name": "web",
+      "description": "Web content fetching and analysis capabilities",
+      "tools": [
+        "fetch_url",
+        "fetch_multiple_urls",
+        "extract_links",
+        "analyze_webpage"
+      ]
+    },
+    {
+      "name": "command",
+      "description": "System command execution with streaming support",
+      "tools": [
+        "execute_command",
+        "execute_command_stream"
+      ]
+    }
+  ],
+  "configuration": {
+    "database": {
+      "supportedDrivers": ["sqlite", "mysql", "postgresql"],
+      "maxConnections": 10,
+      "connectionTimeout": 30000
+    },
+    "filesystem": {
+      "maxFileSize": "10MB",
+      "allowedExtensions": ["*"],
+      "restrictedPaths": []
+    },
+    "web": {
+      "userAgent": "AversionMCP/1.0.0",
+      "timeout": 30000,
+      "maxRedirects": 5,
+      "maxContentLength": "10MB"
+    },
+    "command": {
+      "timeout": 300000,
+      "maxOutputSize": "1MB"
+    }
+  }
+}

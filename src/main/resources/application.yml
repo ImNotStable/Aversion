@@ -1,0 +1,162 @@
+# Production Configuration for MCP Server
+server:
+  name: "Aversion MCP Server"
+  version: "1.0.0"
+  environment: ${ENV:production}
+  port: ${SERVER_PORT:8080}
+
+# Logging Configuration
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
+    com.aversion: ${LOG_LEVEL:INFO}
+    org.springframework: WARN
+    org.hibernate: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: ${LOG_FILE:logs/mcp-server.log}
+    max-size: ${LOG_MAX_SIZE:10MB}
+    max-history: ${LOG_MAX_HISTORY:30}
+
+# Database Configuration
+database:
+  connection-pool:
+    maximum-pool-size: ${DB_POOL_SIZE:10}
+    minimum-idle: ${DB_POOL_MIN_IDLE:2}
+    connection-timeout: ${DB_CONNECTION_TIMEOUT:30000}
+    idle-timeout: ${DB_IDLE_TIMEOUT:600000}
+    max-lifetime: ${DB_MAX_LIFETIME:1800000}
+    leak-detection-threshold: ${DB_LEAK_DETECTION:60000}
+  
+  # Default database configurations
+  sqlite:
+    enabled: ${SQLITE_ENABLED:true}
+    file-path: ${SQLITE_PATH:data/mcp-server.db}
+    
+  mysql:
+    enabled: ${MYSQL_ENABLED:false}
+    host: ${MYSQL_HOST:localhost}
+    port: ${MYSQL_PORT:3306}
+    database: ${MYSQL_DATABASE:mcp_server}
+    username: ${MYSQL_USERNAME:mcp_user}
+    password: ${MYSQL_PASSWORD:}
+    
+  postgresql:
+    enabled: ${POSTGRES_ENABLED:false}
+    host: ${POSTGRES_HOST:localhost}
+    port: ${POSTGRES_PORT:5432}
+    database: ${POSTGRES_DATABASE:mcp_server}
+    username: ${POSTGRES_USERNAME:mcp_user}
+    password: ${POSTGRES_PASSWORD:}
+
+# Web Module Configuration
+web:
+  http-client:
+    connection-timeout: ${WEB_CONNECTION_TIMEOUT:30000}
+    read-timeout: ${WEB_READ_TIMEOUT:60000}
+    max-connections: ${WEB_MAX_CONNECTIONS:50}
+    max-connections-per-host: ${WEB_MAX_CONNECTIONS_PER_HOST:10}
+  
+  rate-limiting:
+    enabled: ${WEB_RATE_LIMITING:true}
+    requests-per-minute: ${WEB_RATE_LIMIT:60}
+  
+  content:
+    max-page-size: ${WEB_MAX_PAGE_SIZE:10485760} # 10MB
+    user-agent: ${WEB_USER_AGENT:Aversion-MCP-Server/1.0.0}
+
+# File System Module Configuration
+filesystem:
+  security:
+    allowed-paths: ${FS_ALLOWED_PATHS:/tmp,/var/tmp,./data,./uploads}
+    max-file-size: ${FS_MAX_FILE_SIZE:104857600} # 100MB
+    max-batch-size: ${FS_MAX_BATCH_SIZE:100}
+  
+  operations:
+    timeout: ${FS_OPERATION_TIMEOUT:30000}
+    buffer-size: ${FS_BUFFER_SIZE:8192}
+
+# Monitoring and Metrics
+monitoring:
+  enabled: ${MONITORING_ENABLED:true}
+  metrics:
+    enabled: ${METRICS_ENABLED:true}
+    export:
+      prometheus:
+        enabled: ${PROMETHEUS_ENABLED:true}
+        port: ${PROMETHEUS_PORT:9090}
+        path: ${PROMETHEUS_PATH:/metrics}
+    
+  tracing:
+    enabled: ${TRACING_ENABLED:false}
+    sample-rate: ${TRACING_SAMPLE_RATE:0.1}
+
+# Security Configuration
+security:
+  cors:
+    enabled: ${CORS_ENABLED:true}
+    allowed-origins: ${CORS_ORIGINS:*}
+    allowed-methods: ${CORS_METHODS:GET,POST,PUT,DELETE,OPTIONS}
+    allowed-headers: ${CORS_HEADERS:*}
+    
+  rate-limiting:
+    enabled: ${RATE_LIMITING_ENABLED:true}
+    requests-per-minute: ${RATE_LIMIT_RPM:1000}
+    burst-capacity: ${RATE_LIMIT_BURST:100}
+    
+  input-validation:
+    max-request-size: ${MAX_REQUEST_SIZE:10485760} # 10MB
+    max-json-depth: ${MAX_JSON_DEPTH:20}
+
+# Performance Configuration
+performance:
+  thread-pool:
+    core-size: ${THREAD_POOL_CORE:4}
+    max-size: ${THREAD_POOL_MAX:20}
+    queue-capacity: ${THREAD_POOL_QUEUE:100}
+    keep-alive: ${THREAD_POOL_KEEPALIVE:60}
+    
+  caching:
+    enabled: ${CACHING_ENABLED:true}
+    max-size: ${CACHE_MAX_SIZE:1000}
+    ttl: ${CACHE_TTL:3600} # 1 hour
+    
+  compression:
+    enabled: ${COMPRESSION_ENABLED:true}
+    min-response-size: ${COMPRESSION_MIN_SIZE:1024}
+
+# Development Configuration (only used when ENV=development)
+development:
+  debug:
+    enabled: ${DEBUG_ENABLED:false}
+    log-requests: ${DEBUG_LOG_REQUESTS:false}
+    log-responses: ${DEBUG_LOG_RESPONSES:false}
+    
+  hot-reload:
+    enabled: ${HOT_RELOAD_ENABLED:false}
+    watch-paths: ${HOT_RELOAD_PATHS:src/main/java}
+
+# Production Specific Settings
+production:
+  optimization:
+    jvm:
+      gc: "G1GC"
+      heap-size: ${JAVA_HEAP_SIZE:512m}
+      gc-pause-target: ${GC_PAUSE_TARGET:200}
+      
+  monitoring:
+    jmx:
+      enabled: ${JMX_ENABLED:true}
+      port: ${JMX_PORT:9999}
+      
+  backup:
+    enabled: ${BACKUP_ENABLED:true}
+    schedule: ${BACKUP_SCHEDULE:0 2 * * *} # Daily at 2 AM
+    retention-days: ${BACKUP_RETENTION:30}
+    
+  maintenance:
+    enabled: ${MAINTENANCE_ENABLED:true}
+    cleanup-schedule: ${CLEANUP_SCHEDULE:0 1 * * 0} # Weekly on Sunday at 1 AM
+    log-cleanup-days: ${LOG_CLEANUP_DAYS:30}

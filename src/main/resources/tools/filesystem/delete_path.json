@@ -1,0 +1,17 @@
+{
+  "name": "delete_path",
+  "description": "Deletes a file or an empty/non-empty directory.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "The path to the file or directory to delete.",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "path"
+    ]
+  }
+}

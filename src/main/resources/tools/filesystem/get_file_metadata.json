@@ -1,0 +1,17 @@
+{
+  "name": "get_file_metadata",
+  "description": "Gets metadata (size, timestamps, type) for a file or directory.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "The path to the file or directory.",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "path"
+    ]
+  }
+}

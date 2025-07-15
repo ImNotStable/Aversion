@@ -1,0 +1,80 @@
+{
+  "name": "alter_table",
+  "description": "Alter an existing table (add or drop columns)",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "connectionId": {
+        "type": "string",
+        "description": "Database connection identifier"
+      },
+      "tableName": {
+        "type": "string",
+        "description": "Name of the table to alter",
+        "minLength": 1
+      },
+      "action": {
+        "type": "string",
+        "description": "Action to perform: 'add_column' or 'drop_column'",
+        "enum": ["add_column", "drop_column"]
+      },
+      "columnDefinition": {
+        "type": "object",
+        "description": "Required for 'add_column'. Defines the new column.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "New column name"
+          },
+          "type": {
+            "type": "string",
+            "description": "New column SQL type (e.g., VARCHAR(255), INT)"
+          },
+          "primaryKey": {
+            "type": "boolean",
+            "description": "True if this column is part of the primary key",
+            "default": false
+          },
+          "notNull": {
+            "type": "boolean",
+            "description": "True if this column cannot be null",
+            "default": false
+          },
+          "defaultValue": {
+            "type": "string",
+            "description": "Default value for the column"
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ]
+      },
+      "columnName": {
+        "type": "string",
+        "description": "Required for 'drop_column'. Name of the column to drop."
+      }
+    },
+    "required": [
+      "connectionId",
+      "tableName",
+      "action"
+    ],
+    "oneOf": [
+      {
+        "properties": {
+          "action": {"const": "add_column"},
+          "columnDefinition": {}
+        },
+        "required": ["columnDefinition"]
+      },
+      {
+        "properties": {
+          "action": {"const": "drop_column"},
+          "columnName": {}
+        },
+        "required": ["columnName"]
+      }
+    ]
+  }
+}

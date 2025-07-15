@@ -1,0 +1,17 @@
+{
+  "name": "get_webpage_content",
+  "description": "Fetches the content of a given URL.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "The URL of the webpage to fetch.",
+        "format": "uri"
+      }
+    },
+    "required": [
+      "url"
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "required" : [ "connectionId", "query" ],
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "properties" : {
+    "query" : {
+      "type" : "string",
+      "minLength" : 1,
+      "description" : "SQL query to execute"
+    },
+    "params" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      },
+      "description" : "Query parameters for prepared statements"
+    },
+    "limit" : {
+      "type" : "integer",
+      "maximum" : 10000,
+      "description" : "Maximum rows to return",
+      "minimum" : 1,
+      "default" : 1000
+    },
+    "connectionId" : {
+      "type" : "string",
+      "description" : "Database connection identifier"
+    }
+  },
+  "type" : "object"
+}

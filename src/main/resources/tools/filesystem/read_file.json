@@ -1,0 +1,17 @@
+{
+  "name": "read_file",
+  "description": "Reads the content of a file.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "string",
+        "description": "The path to the file.",
+        "minLength": 1
+      }
+    },
+    "required": [
+      "path"
+    ]
+  }
+}

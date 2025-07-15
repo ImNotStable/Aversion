@@ -1,0 +1,40 @@
+{
+  "name": "update_data",
+  "description": "Update existing data in a specified table",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "connectionId": {
+        "type": "string",
+        "description": "Database connection identifier"
+      },
+      "tableName": {
+        "type": "string",
+        "description": "Name of the table to update data in",
+        "minLength": 1
+      },
+      "data": {
+        "type": "object",
+        "description": "A map of column names to their new values",
+        "additionalProperties": true,
+        "minProperties": 1
+      },
+      "where": {
+        "type": "string",
+        "description": "SQL WHERE clause to filter rows (e.g., \"id = ?\")",
+        "minLength": 1
+      },
+      "params": {
+        "type": "array",
+        "description": "Parameters for the WHERE clause",
+        "items": {"type": "string"}
+      }
+    },
+    "required": [
+      "connectionId",
+      "tableName",
+      "data",
+      "where"
+    ]
+  }
+}

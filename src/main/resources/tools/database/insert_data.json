@@ -1,0 +1,29 @@
+{
+  "name": "insert_data",
+  "description": "Insert new data into a specified table",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "connectionId": {
+        "type": "string",
+        "description": "Database connection identifier"
+      },
+      "tableName": {
+        "type": "string",
+        "description": "Name of the table to insert data into",
+        "minLength": 1
+      },
+      "data": {
+        "type": "object",
+        "description": "A map of column names to their values to be inserted",
+        "additionalProperties": true,
+        "minProperties": 1
+      }
+    },
+    "required": [
+      "connectionId",
+      "tableName",
+      "data"
+    ]
+  }
+}
