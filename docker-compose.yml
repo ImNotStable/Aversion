@@ -59,7 +59,7 @@ services:
       - "${POSTGRES_PORT:-5432}:5432"
 
   redis:
-    image: redis:7-alpine
+    image: redis:8-alpine
     container_name: mcp-redis
     restart: unless-stopped
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
