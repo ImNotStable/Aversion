@@ -41,7 +41,7 @@ jobs:
 
   sonarqube_analysis:
     runs-on: self-hosted
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master' # Only run on push to master
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' # Only run on push to master.
     
     steps:
     - uses: actions/checkout@v4
