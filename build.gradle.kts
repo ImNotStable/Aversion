@@ -136,9 +136,8 @@ tasks.build {
 }
 
 tasks.compileJava {
-    options.compilerArgs.addAll(listOf("-parameters", "--enable-preview"))
+    options.compilerArgs.addAll(listOf("-parameters", "-proc:none"))
     options.isIncremental = true
-    options.compilerArgs.addAll(listOf("-proc:none"))
 }
 
 tasks.compileTestJava {
