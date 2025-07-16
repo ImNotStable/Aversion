@@ -11,7 +11,7 @@ plugins {
     id("jacoco")
     id("org.sonarqube") version "6.2.0.5505"
     id("com.google.cloud.tools.jib") version "3.4.5"
-    id("org.owasp.dependencycheck") version "9.2.0"
+    id("org.owasp.dependencycheck") version "12.1.3"
 }
 
 group = "com.aversion"
