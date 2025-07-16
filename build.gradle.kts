@@ -290,9 +290,10 @@ jib {
     }
 }
 
-sonarqube {
+sonar {
     properties {
-        property("sonar.projectKey", "aversion-server")
+        property("sonar.projectKey", "ImNotStable_Aversion")
+        property("sonar.organization", "imnotstable")
         property("sonar.projectName", "Aversion MCP Server")
         property("sonar.projectVersion", version.toString())
         property("sonar.sources", "src/main/java")
