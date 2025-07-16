@@ -308,7 +308,7 @@ tasks.sonarqube {
 }
 
 dependencyCheck {
-    nvd.apiKey = System.getenv("NVD_API_KEY")
+    nvd.apiKey = System.getenv("NVD_API_KEY") ?: project.findProperty("NVD_API_KEY") as String?
 }
 
 tasks.register("validateProduction") {

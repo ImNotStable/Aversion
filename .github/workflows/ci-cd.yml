@@ -81,7 +81,7 @@ jobs:
       run: chmod +x ./gradlew
     
     - name: Run security audit
-      run: ./gradlew dependencyCheckAnalyze
+      run: ./gradlew dependencyCheckAnalyze -PNVD_API_KEY=${{ secrets.NVD_API_KEY }}
     
     - name: Run CodeQL Analysis
       uses: github/codeql-action/init@v2
