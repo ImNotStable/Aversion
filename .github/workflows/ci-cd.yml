@@ -84,13 +84,11 @@ jobs:
       run: ./gradlew dependencyCheckAnalyze -PNVD_API_KEY=${{ secrets.NVD_API_KEY }}
     
     - name: Run CodeQL Analysis
-      if: ${{ secrets.CODEQL_ENABLED == 'true' }}
       uses: github/codeql-action/init@v3
       with:
         languages: java
     
     - name: Perform CodeQL Analysis
-      if: ${{ secrets.CODEQL_ENABLED == 'true' }}
       uses: github/codeql-action/analyze@v3
 
   build:
