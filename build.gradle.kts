@@ -307,6 +307,10 @@ tasks.sonarqube {
     onlyIf { project.hasProperty("runOnCI") }
 }
 
+dependencyCheck {
+    nvd.apiKey = System.getenv("NVD_API_KEY")
+}
+
 tasks.register("validateProduction") {
     group = "deployment"
     description = "Validate production readiness"
