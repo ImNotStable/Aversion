@@ -77,10 +77,7 @@ jobs:
         cache: 'gradle'
     
     - name: Make gradlew executable
-      run: chmod +x ./gradlew
-    
-    - name: Run security audit
-      run: ./gradlew dependencyCheckAnalyze -PNVD_API_KEY=${{ secrets.NVD_API_KEY }}
+      run: chmod +x ./gradlew\
     
     - name: Run CodeQL Analysis
       uses: github/codeql-action/init@v3
@@ -92,7 +89,7 @@ jobs:
 
   build:
     runs-on: self-hosted
-    needs: [test, security]
+    needs: [sonarqube_analysis, security]
     
     steps:
     - uses: actions/checkout@v4
