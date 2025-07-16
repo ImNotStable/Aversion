@@ -85,9 +85,9 @@ dependencies {
     implementation("org.jsoup:jsoup:1.21.1")
 
     // Testing
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
-    testImplementation("org.junit.platform:junit-platform-launcher:1.11.4")
-    testImplementation("org.junit.platform:junit-platform-engine:1.11.4")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.13.3")
+    testImplementation("org.junit.platform:junit-platform-launcher:1.13.3")
+    testImplementation("org.junit.platform:junit-platform-engine:1.13.3")
     testImplementation("org.mockito:mockito-core:5.18.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
     testImplementation("org.assertj:assertj-core:3.27.3")
