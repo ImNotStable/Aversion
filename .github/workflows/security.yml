@@ -5,7 +5,7 @@ on:
     - cron: '0 2 * * 1'  # Weekly on Monday at 2 AM
   workflow_dispatch:
   push:
-    branches: [ master ]
+    branches: [ master, dev ]
 
 jobs:
   dependency-check:
@@ -25,7 +25,7 @@ jobs:
       run: chmod +x ./gradlew
     
     - name: Run dependency check
-      run: ./gradlew dependencyCheckAnalyze ${{ secrets.NVD_API_KEY }}
+      run: ./gradlew dependencyCheckAnalyze -PNVD_API_KEY=${{ secrets.NVD_API_KEY }}
     
     - name: Check for known vulnerabilities
       uses: aquasecurity/trivy-action@master

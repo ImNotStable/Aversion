@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
     branches: [ master, dev ]
+  pull_request:
+    branches: [ master ]
 
 env:
   JAVA_VERSION: '21'
