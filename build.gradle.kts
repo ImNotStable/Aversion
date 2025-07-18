@@ -78,7 +78,7 @@ dependencies {
 
     // Utilities
     implementation("org.apache.commons:commons-lang3:3.18.0")
-    implementation("commons-io:commons-io:2.19.0")
+    implementation("commons-io:commons-io:2.20.0")
     implementation("org.jetbrains:annotations:26.0.2")
 
     // HTML parsing for web module
