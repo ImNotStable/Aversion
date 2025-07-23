@@ -55,7 +55,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.2")
 
     // Database drivers
-    implementation("com.zaxxer:HikariCP:6.3.0")
+    implementation("com.zaxxer:HikariCP:6.3.2")
     implementation("org.xerial:sqlite-jdbc:3.50.2.0")
     testImplementation("com.h2database:h2:2.3.232")
     implementation("com.mysql:mysql-connector-j:9.3.0")
