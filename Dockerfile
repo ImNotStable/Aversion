@@ -2,7 +2,7 @@
 # Optimized for performance, security, and modern best practices
 
 # Build stage with optimized caching
-FROM gradle:8.14.3-jdk21-alpine AS builder
+FROM gradle:9.0.0-jdk21-alpine AS builder
 
 # Set build arguments for better caching
 ARG GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.parallel=true -Dorg.gradle.caching=true"
