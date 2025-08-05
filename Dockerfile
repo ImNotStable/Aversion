@@ -31,7 +31,7 @@ RUN ./gradlew shadowJar --no-daemon -x test && \
     sha256sum build/libs/mcp-server-*.jar > build/libs/checksum.sha256
 
 # Runtime stage with minimal footprint
-FROM eclipse-temurin:21.0.7_6-jre-alpine AS production
+FROM eclipse-temurin:21.0.8_9-jre-alpine AS production
 
 # Install necessary packages with minimal footprint
 RUN apk add --no-cache --update \
