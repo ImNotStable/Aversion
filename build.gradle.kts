@@ -90,7 +90,7 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-engine:1.13.3")
     testImplementation("org.mockito:mockito-core:5.18.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
-    testImplementation("org.assertj:assertj-core:3.27.3")
+    testImplementation("org.assertj:assertj-core:3.27.4")
     testImplementation("org.testcontainers:junit-jupiter:1.21.3")
     testImplementation("org.testcontainers:postgresql:1.21.3")
     testImplementation("org.testcontainers:mysql:1.21.3")
