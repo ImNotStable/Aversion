@@ -59,7 +59,7 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.50.2.0")
     testImplementation("com.h2database:h2:2.3.232")
     implementation("com.mysql:mysql-connector-j:9.3.0")
-    implementation("org.mariadb.jdbc:mariadb-java-client:3.5.4")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.5.5")
     implementation("org.postgresql:postgresql:42.7.7")
 
     // HTTP client for web module
