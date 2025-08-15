@@ -7,7 +7,7 @@ plugins {
     application
     java
     id("java-library")
-    id("com.gradleup.shadow") version "9.0.0-rc1"
+    id("com.gradleup.shadow") version "9.0.2"
     id("jacoco")
     id("org.sonarqube") version "6.2.0.5505"
     id("com.google.cloud.tools.jib") version "3.4.5"
