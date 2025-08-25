@@ -82,7 +82,7 @@ dependencies {
     implementation("org.jetbrains:annotations:26.0.2")
 
     // HTML parsing for web module
-    implementation("org.jsoup:jsoup:1.21.1")
+    implementation("org.jsoup:jsoup:1.21.2")
 
     // Testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.13.3")
