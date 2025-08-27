@@ -9,7 +9,7 @@ plugins {
     id("java-library")
     id("com.gradleup.shadow") version "9.0.0-rc1"
     id("jacoco")
-    id("org.sonarqube") version "6.2.0.5505"
+    id("org.sonarqube") version "6.3.1.5724"
     id("com.google.cloud.tools.jib") version "3.4.5"
     id("org.owasp.dependencycheck") version "12.1.3"
 }
